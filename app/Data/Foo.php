@@ -2,7 +2,7 @@
 
 namespace App\Data;
 
-class Foo
+class Foo implements FooInterface
 {
     public function foo(): string
     {

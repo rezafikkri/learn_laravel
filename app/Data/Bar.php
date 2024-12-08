@@ -14,4 +14,9 @@ class Bar
     {
         return $this->foo->foo() . ' and Bar';
     }
+
+    public function getFoo(): Foo
+    {
+        return $this->foo;
+    }
 }
