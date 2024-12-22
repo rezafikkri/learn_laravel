@@ -1,10 +1,17 @@
 <?php
 
-use App\Http\Controllers\ConfigCacheController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/configcache', [ConfigCacheController::class, 'index']);
+Route::get('/rezafikkri', function () {
+    return 'RezaFikkri';
+});
+
+Route::redirect('/youtube', '/rezafikkri');
+
+Route::fallback(function () {
+    return '404 by RezaFikkri';
+});
