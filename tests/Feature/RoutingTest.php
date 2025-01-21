@@ -30,4 +30,46 @@ class RoutingTest extends TestCase
         $this->get('/404')
             ->assertSeeText('404 by RezaFikkri');
     }
+
+    #[Test]
+    public function routeParameter(): void
+    {
+        $this->get('/product/12345fg/edit')
+            ->assertSeeText('Product 12345fg');
+
+        $this->get('/product/12345fg/item/fg456')
+            ->assertSeeText('Product 12345fg, Item fg456');
+    }
+
+    #[Test]
+    public function routeParameterWithRegex(): void
+    {
+        $this->get('/categories/12345')
+            ->assertSeeText('Category 12345');
+
+        $this->get('/categories/-123')
+            ->assertSeeText('404 by RezaFikkri');
+    }
+
+    #[Test]
+    public function routeParameterOptional(): void
+    {
+        $this->get('/users')
+            ->assertOk()
+            ->assertSeeText('Users 404');
+
+        $this->get('/users/123')
+            ->assertOk()
+            ->assertSeeText('Users 123');
+    }
+
+    #[Test]
+    public function routeConflict(): void
+    {
+        $this->get('/conflict/reza')
+            ->assertSeeText('Username only for reza');
+
+        $this->get('/conflict/adelina')
+            ->assertSeeText('Username adelina');
+    }
 }
