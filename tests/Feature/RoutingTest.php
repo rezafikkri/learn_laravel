@@ -72,4 +72,13 @@ class RoutingTest extends TestCase
         $this->get('/conflict/adelina')
             ->assertSeeText('Username adelina');
     }
+
+    #[Test]
+    public function namedRoute(): void
+    {
+        $this->get('/produk/1234/ubah')
+            ->assertSeeText('URL: http://localhost/product/1234/edit');
+        $this->get('/produk/4567/redirect')
+            ->assertRedirect('/product/4567/edit');
+    }
 }
