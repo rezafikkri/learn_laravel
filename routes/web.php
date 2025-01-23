@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HelloController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -68,3 +69,4 @@ Route::get('/produk/{id}/redirect', function (string $id) {
     return redirect()->route('product.edit', [ $id ]);
 });
 
+Route::get('/controller/hello/{name}', [HelloController::class, 'hello']);
