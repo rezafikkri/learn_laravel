@@ -80,3 +80,4 @@ Route::post('/input/hello/first', [InputController::class, 'helloFirstName']);
 Route::post('/input/hello/all', [InputController::class, 'helloAllInput']);
 Route::post('/input/array', [InputController::class, 'arrayInput']);
 Route::post('/input/dynamic', [InputController::class, 'dynamicProperty']);
+Route::post('/input/type', [InputController::class, 'inputType']);

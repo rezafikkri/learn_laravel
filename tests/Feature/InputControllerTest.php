@@ -68,4 +68,21 @@ class InputControllerTest extends TestCase
                 'Oppo Reno',
             ]);
     }
+
+    #[Test]
+    public function inputType(): void
+    {
+        $this->post('/input/type', [
+            'name' => 'Reza Sariful Fikri',
+            'married' => 'false',
+            'birth_date' => '10-01-2001',
+            'gender' => 'males',
+        ])
+            ->assertExactJson([
+                'name' => 'Reza Sariful Fikri',
+                'married' => false,
+                'birth_date' => '2001-01-10',
+                'gender' => 'male',
+            ]);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Gender;
 use Illuminate\Http\Request;
 
 class InputController extends Controller
@@ -35,5 +36,20 @@ class InputController extends Controller
         $request->name = 'Ini adalah name';
         $name = $request->name; // ini tidak akan mengambil lagi dari input yang kita kirim
         return $name;
+    }
+
+    public function inputType(Request $request): string
+    {
+        $name = $request->input('name');
+        $married = $request->boolean('married');
+        $birthDate = $request->date('birth_date', 'd-m-Y');
+        $gender = $request->enum('gender', Gender::class);
+
+        return json_encode([
+            'name' => $name,
+            'married' => $married,
+            'birth_date' => $birthDate->format('Y-m-d'),
+            'gender' => $gender->value,
+        ]);
     }
 }
