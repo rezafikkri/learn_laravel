@@ -9,7 +9,7 @@ class InputController extends Controller
 {
     public function hello(Request $request): string
     {
-        $name = $request->input('name');
+        $name = $request->input('name', 'Reza');
         return "Hello $name";
     }
 
@@ -52,4 +52,24 @@ class InputController extends Controller
             'gender' => $gender->value,
         ]);
     }
+
+    public function filterOnly(Request $request): string
+    {
+        $input = $request->only('name.first', 'name.last');
+        return json_encode($input);
+    }
+
+    public function filterExcept(Request $request): string
+    {
+        $input = $request->except('admin');
+        return json_encode($input);
+    }
+
+    public function inputMerge(Request $request): string
+    {
+        $request->merge(['admin' => false]);
+        $input = $request->input();
+        return json_encode($input);
+    }
+
 }

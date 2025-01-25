@@ -76,13 +76,72 @@ class InputControllerTest extends TestCase
             'name' => 'Reza Sariful Fikri',
             'married' => 'false',
             'birth_date' => '10-01-2001',
-            'gender' => 'males',
+            'gender' => 'male',
         ])
             ->assertExactJson([
                 'name' => 'Reza Sariful Fikri',
                 'married' => false,
                 'birth_date' => '2001-01-10',
                 'gender' => 'male',
+            ]);
+    }
+
+    #[Test]
+    public function filterOnly(): void
+    {
+        $this->post('/input/filter-only', [
+            'name' => [
+                'first' => 'Reza',
+                'middle' => 'Sariful',
+                'last' => 'Fikri',
+            ],
+        ])
+            ->assertExactJson([
+                'name' => [
+                    'first' => 'Reza',
+                    'last' => 'Fikri',
+                ],
+            ]);
+    }
+
+    #[Test]
+    public function filterExcept(): void
+    {
+        $this->post('/input/filter-except', [
+            'name' => [
+                'first' => 'Reza',
+                'middle' => 'Sariful',
+                'last' => 'Fikri',
+            ],
+            'admin' => true,
+        ])
+            ->assertExactJson([
+                'name' => [
+                    'first' => 'Reza',
+                    'middle' => 'Sariful',
+                    'last' => 'Fikri',
+                ],
+            ]);
+    }
+
+    #[Test]
+    public function inputMerge(): void
+    {
+        $this->post('/input/merge', [
+            'name' => [
+                'first' => 'Reza',
+                'middle' => 'Sariful',
+                'last' => 'Fikri',
+            ],
+            'admin' => true,
+        ])
+            ->assertExactJson([
+                'name' => [
+                    'first' => 'Reza',
+                    'middle' => 'Sariful',
+                    'last' => 'Fikri',
+                ],
+                'admin' => false,
             ]);
     }
 }

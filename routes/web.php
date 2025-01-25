@@ -81,3 +81,6 @@ Route::post('/input/hello/all', [InputController::class, 'helloAllInput']);
 Route::post('/input/array', [InputController::class, 'arrayInput']);
 Route::post('/input/dynamic', [InputController::class, 'dynamicProperty']);
 Route::post('/input/type', [InputController::class, 'inputType']);
+Route::post('/input/filter-only', [InputController::class, 'filterOnly']);
+Route::post('/input/filter-except', [InputController::class, 'filterExcept']);
+Route::post('/input/merge', [InputController::class, 'inputMerge']);
