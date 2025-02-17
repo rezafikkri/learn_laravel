@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CookieController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\HelloController;
 use App\Http\Controllers\InputController;
 use App\Http\Controllers\RedirectController;
@@ -132,3 +133,7 @@ Route::get('/middleware/testforprependappend', function () {
 Route::get('/middleware/group', function () {
     return 'Middleware group';
 })->middleware('rf');
+
+
+Route::get('/form', [FormController::class, 'form']);
+Route::post('/form', [FormController::class, 'submitForm']);
