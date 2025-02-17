@@ -7,6 +7,7 @@ use App\Http\Controllers\InputController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\SessionCookieEnryptionController;
+use App\Http\Middleware\ExampleMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -113,3 +114,21 @@ Route::get('/redirect/named-route', [RedirectController::class, 'redirectNamedRo
 Route::get('/redirect/action', [RedirectController::class, 'redirectAction']);
 Route::get('/redirect/hay/{name}', [RedirectController::class, 'redirectHay']);
 Route::get('/redirect/rezafikkri', [RedirectController::class, 'redirectRezaFikkri']);
+
+Route::middleware([ExampleMiddleware::class.':RF,401'])->group(function () {
+    Route::get('/middleware/api', function () {
+        return 'Ok';
+    });
+
+    Route::get('/middleware/testtwo', function () {
+        return 'without middleware';
+    })->withoutMiddleware([ExampleMiddleware::class.':RF,401']);
+});
+
+Route::get('/middleware/testforprependappend', function () {
+    return 'Test prepend append global middleware';
+});
+
+Route::get('/middleware/group', function () {
+    return 'Middleware group';
+})->middleware('rf');
