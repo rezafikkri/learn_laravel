@@ -10,6 +10,7 @@ use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\SessionCookieEnryptionController;
 use App\Http\Middleware\ExampleMiddleware;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 Route::get('/', function () {
     return view('welcome');
@@ -116,6 +117,10 @@ Route::get('/redirect/from', [RedirectController::class, 'redirectFrom']);
 Route::get('/redirect/to', [RedirectController::class, 'redirectTo']);
 Route::get('/redirect/hello/{name}/{age}', [RedirectController::class, 'redirectHello'])
     ->name('redirect.hello');
+Route::get('/redirect/named', function () {
+    return route('redirect.hello', ['reza', 24]);
+});
+
 Route::get('/redirect/named-route', [RedirectController::class, 'redirectNamedRoute']);
 Route::get('/redirect/action', [RedirectController::class, 'redirectAction']);
 Route::get('/redirect/hay/{name}', [RedirectController::class, 'redirectHay']);
@@ -139,6 +144,13 @@ Route::get('/middleware/group', function () {
     return 'Middleware group';
 })->middleware('rf');
 
+Route::get('/url/action', function () {
+    return action([FormController::class, 'form']);
+});
 
 Route::get('/form', [FormController::class, 'form']);
 Route::post('/form', [FormController::class, 'submitForm']);
+
+Route::get('/url/current', function () {
+    return URL::full();
+});
