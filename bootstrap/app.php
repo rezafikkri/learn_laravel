@@ -1,11 +1,13 @@
 <?php
 
+use App\Exceptions\ValidationException;
 use App\Http\Middleware\ExampleMiddleware;
 use App\Http\Middleware\Test1Middleware;
 use App\Http\Middleware\Test2Middleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -25,5 +27,13 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->dontReport([
+            ValidationException::class,
+        ]);
+        $exceptions->report(function (Throwable $e) {
+            var_dump($e);
+        });
+        $exceptions->render(function (ValidationException $e, Request $request) {
+            return response('Bad Request', 400);
+        });
     })->create();
